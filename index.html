@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ESPN Fantasy Data</title>
+	<script type="text/javascript" src="League.js"></script>
+	<script type="text/javascript" src="Team.js"></script>
+	<script type="text/javascript" src="Matchup.js"></script>
+	<script type="text/javascript" src="Table.js"></script>
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<link rel="stylesheet" type="text/css" href="ffapi.css">
+	<script type="text/javascript" src="script.js"></script>
+	<script>
+	window.onload = function() {
+		loadfcn();
+		document.getElementById("leagueinput").value = 1533077;
+		getLeague();
+	};
+	</script>
+</head>
+<body>
+	<div class="row">
+		<div class="column">
+			<div class="item">ESPN League ID</div>
+			<div class="item">
+				<input id="leagueinput" type="number" name="league">
+			</div>
+			<div class="item" id="leaguename"></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="item">Week Selector</div>
+	</div>
+	<div class="row" id="tcontainer"></div>
+</body>
+</html>
