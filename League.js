@@ -67,7 +67,7 @@ class League {
 		this.ownerdict = idDict;
 	}
 
-	get_scores() {
+	get_schedule() {
 		this.get_data("mMatchupScore", {}).
 			then(this.parse_schedule.bind(this));
 	}
@@ -91,6 +91,8 @@ class League {
 		// var byWeek = weekIds.map(id => allgames.filter(g => g.matchupPeriodId === id));
 		// console.log(byWeek);
 
+		this.make_week_buttons("weekbuttoncontainer");
+
 		this.make_team_table("tcontainer");
 	}
 
@@ -99,12 +101,44 @@ class League {
 			.then( function (j) {
 				this.parse_ownerdict(j);
 				this.teams = j.teams.map(t => new Team(t, this.ownerdict));
-				this.get_scores();
+				this.get_schedule();
 			}.bind(this));
 	}
 
 	set_team_records(includedWeeks) {
 		this.teams.forEach(t => t.set_record(includedWeeks));
+	}
+
+	make_week_buttons(parent) {
+		var allWeeks = this.matchups.map(m => m.week).filter(distinct);
+
+		var divs = d3.select("#" + parent)
+			.selectAll("div")
+			.data(allWeeks).enter()
+			.append("div")
+			.attr("class", "weekcontainer");
+
+		divs.append("input")
+			.attr("type", "checkbox")
+			.attr("class", "invisible weekinput")
+			.attr("id", (_,i) => "week" + (i+1))
+			.property("checked", true)
+			.on("change", function () {
+				console.log(this.weeks_checked());
+			}.bind(this));
+
+		var labels = divs.append("label")
+			.attr("class", "weeklabel")
+			.attr("for", (_,i) => "week" + (i+1));
+
+		labels.append("span")
+			.attr("class", "weekbutton")
+			.text((_,i) => allWeeks[i]);
+
+	}
+
+	weeks_checked() {
+		return d3.selectAll(".weekinput")[0].map(e => e.checked);
 	}
 
 	make_team_table(parent) {

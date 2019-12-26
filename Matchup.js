@@ -2,8 +2,12 @@
 
 class Matchup {
 	constructor(game) {
+		// console.log(game);
 		var notBye = ["home", "away"].every(d => Object.keys(game).includes(d));
 		this.bye = !notBye;
+
+		this.week = game.matchupPeriodId;
+		this.playoffs = game.playoffTierType.toLowerCase() != "none";
 
 		this.homeId = game.home.teamId;
 		this.homePoints = game.home.totalPoints;

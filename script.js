@@ -1,5 +1,21 @@
 // script.js
 
+// useful functions
+
+
+function itemFcn(d,i) {
+	return d;
+}
+
+function indexFcn(d,i) {
+	return i;
+}
+
+function distinct(value, index, array) {
+	return array.indexOf(value) === index;
+}
+
+
 // globals
 var l, tab, jsondata;
 var date = new Date();

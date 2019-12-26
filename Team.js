@@ -17,7 +17,7 @@ class Team {
 		this.finalRanking = teamjson.rankCalculatedFinal;
 		this.regSeasonRanking = teamjson.playoffSeed;
 
-		console.log(teamjson);
+		// console.log(teamjson);
 		// console.log(this.owner);
 		// console.log(teamjson.record.overall);
 	}

@@ -1,14 +1,6 @@
 // Table.js
 // requires d3.js
 
-function itemFcn(d,i) {
-	return d;
-}
-
-function indexFcn(d,i) {
-	return i;
-}
-
 class Table {
 
 	constructor (parentid) {
