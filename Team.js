@@ -10,8 +10,10 @@ class Team {
 
 		this.full_record = {};
 
-		this.full_record.acquisitions = teamjson.transactionCounter.acquisitions;
+		// this.full_record.acquisitions = teamjson.transactionCounter.acquisitions;
 		this.full_record.acquisitionsByWeek = teamjson.transactionCounter.matchupAcquisitionTotals;
+
+
 		// console.log(this.acquisitionsByWeek);
 
 		this.finalRanking = teamjson.rankCalculatedFinal;
@@ -34,6 +36,8 @@ class Team {
 		this.full_record.totalPtStr = this.ptFormatter(d3.sum(this.full_record.pointsByWeek));
 		this.full_record.averagePoints = this.ptFormatter(d3.mean(this.full_record.pointsByWeek));
 		this.full_record.stdevPoints = this.ptFormatter(d3.deviation(this.full_record.pointsByWeek));
+
+		this.full_record.acquisitions = d3.sum(Object.values(this.full_record.acquisitionsByWeek));
 		// console.log(this.wins.length + " wins, " + this.losses.length + " losses");
 
 		this.record = this.full_record;
@@ -47,6 +51,38 @@ class Team {
 			return;
 		}
 
+		var subrecord = {};
+
+		var subset = this.full_record.involved.filter(m => includedWeeks.includes(m.week));
+
+		// console.log(this.full_record.involved);
+		// console.log(includedWeeks);
+		// console.log(this.full_record.involved.map(m => m.week));
+
+		subrecord.wins = subset.filter(m => m.won(this.id));
+		subrecord.losses = subset.filter(m => m.lost(this.id));
+		subrecord.pointsByWeek = subset.map(m => m.points(this.id));
+
+		subrecord.totalPtStr = this.ptFormatter(d3.sum(this.record.pointsByWeek));
+		subrecord.averagePoints = this.ptFormatter(d3.mean(this.record.pointsByWeek));
+		subrecord.stdevPoints = this.ptFormatter(d3.deviation(this.record.pointsByWeek));
+
+		var keys = Object.keys(this.full_record.acquisitionsByWeek).map(parseFloat);
+
+		var acqArray = includedWeeks.map(function(d) {
+			if (keys.includes(d)) {
+				return this.full_record.acquisitionsByWeek[d];
+			}
+			else {
+				return 0;
+			}
+		}.bind(this));
+
+		subrecord.acquisitions = d3.sum(acqArray);
+
+		// this.record.acquisitions = this.ptFormatter(d3.sum(Object.values(this.full_record.acquisitionsByWeek));
+
+		this.record = subrecord;
 
 	}
 

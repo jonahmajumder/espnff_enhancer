@@ -93,6 +93,8 @@ class League {
 
 		this.make_week_buttons("weekbuttoncontainer");
 
+
+
 		this.make_team_table("tcontainer");
 	}
 
@@ -124,7 +126,9 @@ class League {
 			.attr("id", (_,i) => "week" + (i+1))
 			.property("checked", true)
 			.on("change", function () {
-				console.log(this.weeks_checked());
+				// change the team record dict to reflect weeks selected
+				this.set_team_records(this.weeks_checked());
+				this.make_team_table("tcontainer");
 			}.bind(this));
 
 		var labels = divs.append("label")
@@ -138,12 +142,12 @@ class League {
 	}
 
 	weeks_checked() {
-		return d3.selectAll(".weekinput")[0].map(e => e.checked);
+		var isChecked = d3.selectAll(".weekinput")[0].map(e => e.checked);
+		var weekNums = d3.selectAll(".weekbutton")[0].map(s => parseFloat(s.innerText));
+		return weekNums.filter((_,i) => isChecked[i]);
 	}
 
 	make_team_table(parent) {
-		// change the team record dict to reflect weeks selected
-		this.set_team_records("all");
 
 		tab = new Table(parent);
 
@@ -160,7 +164,6 @@ class League {
 		tab.add_column(this.teams.map(t => t.regSeasonRanking), "Regular Season Place");
 
 		tab.add_column(this.teams.map(t => t.record.acquisitions), "Acquisitions");
-
 
 	}
 
