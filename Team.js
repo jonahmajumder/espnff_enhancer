@@ -59,13 +59,14 @@ class Team {
 		// console.log(includedWeeks);
 		// console.log(this.full_record.involved.map(m => m.week));
 
+		subrecord.involved = subset;
 		subrecord.wins = subset.filter(m => m.won(this.id));
 		subrecord.losses = subset.filter(m => m.lost(this.id));
 		subrecord.pointsByWeek = subset.map(m => m.points(this.id));
 
-		subrecord.totalPtStr = this.ptFormatter(d3.sum(this.record.pointsByWeek));
-		subrecord.averagePoints = this.ptFormatter(d3.mean(this.record.pointsByWeek));
-		subrecord.stdevPoints = this.ptFormatter(d3.deviation(this.record.pointsByWeek));
+		subrecord.totalPtStr = this.ptFormatter(d3.sum(subrecord.pointsByWeek));
+		subrecord.averagePoints = this.ptFormatter(d3.mean(subrecord.pointsByWeek));
+		subrecord.stdevPoints = this.ptFormatter(d3.deviation(subrecord.pointsByWeek));
 
 		var keys = Object.keys(this.full_record.acquisitionsByWeek).map(parseFloat);
 

@@ -18,7 +18,22 @@
 
 .item {
 	margin: 2px;
-	justify-content: space-evenly;
+	justify-content: center;
+}
+
+.banner {
+	font-size: 1.5em;
+	background: black;
+	color: white;
+	border-radius: 10px;
+	/* width: 400px; */
+	padding: 8px;
+	text-align: center;
+	display: inline-block;
+}
+
+.vspacer {
+	height: 10px;
 }
 
 #leagueinput {
@@ -59,6 +74,10 @@
 	/*border: 1px solid lightskyblue;*/
 }
 
+#weekpresetcontainer {
+	justify-content: center;
+	align-items: center;
+}
 
 
 th {
@@ -73,4 +92,17 @@ table, td, th {
 
 tr:nth-child(even) {
 	background-color: #f2f2f2;
+}
+
+div.tooltip {	
+    position: absolute;			
+    text-align: center;			
+/*    width: 60px;					
+    height: 28px;*/					
+    padding: 2px;				
+    font: 12px sans-serif;		
+    background: lightsteelblue;	
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;			
 }

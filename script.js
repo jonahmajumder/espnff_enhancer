@@ -15,6 +15,21 @@ function distinct(value, index, array) {
 	return array.indexOf(value) === index;
 }
 
+function range(...args) {
+	if (args.length == 0) {
+		console.error("Range needs at least 1 argument.");
+	}
+	else if (args.length == 1) {
+		return [...Array(args[0]).keys()];
+	}
+	else if (args.length == 2) {
+		return [...Array(args[1] - args[0]).keys()].map(d => d + args[0]);
+	}
+	else {
+		console.error("Range takes at most 2 arguments.");
+	}
+}
+
 
 // globals
 var l, tab, jsondata;
